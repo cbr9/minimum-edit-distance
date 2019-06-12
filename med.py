@@ -7,13 +7,12 @@ from typing import Tuple
 
 class MED:
     
-    def __init__(self, gap_filler: str = "-"):
+    def __init__(self):
         self.source = input("Source string: ")
         self.target = input("Target string: ")
         self.med_matrix = self.minimum_edit_distance()
         self.alignment = self.Alignment(match=1, mismatch=-1, gap=-1, 
-                                        source=self.source, target=self.target,
-                                        gap_filler=gap_filler)
+                                        source=self.source, target=self.target)
     
     def __str__(self):
         return f'Minimum Edit Distance:\n' \
@@ -49,7 +48,7 @@ class MED:
     
     class Alignment:
         
-        def __init__(self, match: int, mismatch: int, gap: int, source: str, target: str, gap_filler: str):
+        def __init__(self, match: int, mismatch: int, gap: int, source: str, target: str, gap_filler: str = "-"):
             self.source = source
             self.target = target
             self.score_matrix = self.needleman_wunsch(match=match, mismatch=mismatch, gap=gap)
