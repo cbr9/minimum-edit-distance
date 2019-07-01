@@ -119,7 +119,14 @@ class MED:
                 step = f"Step {str(i + 1)}:"
                 origin = source_aligned.copy()
                 origin = "".join(origin).replace(gap_filler, "")
-                op = "" if letter_src == letter_tgt else "(ins)" if letter_src == gap_filler else "(del)" if letter_tgt == gap_filler else "(sub)"
+                if letter_src == letter_tgt:
+                    op = ""
+                elif letter_src == gap_filler:
+                    op = "(ins)"
+                elif letter_tgt == gap_filler:
+                    op = "(del)"
+                else:
+                    op = "(sub)"
                 source_aligned[i] = target_aligned[i]
                 changed = ''.join(source_aligned).replace(gap_filler, "")
                 conversion += f"{step:<10} {origin:<15} >>> {changed:>15} {op:>15}\n"
