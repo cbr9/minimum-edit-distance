@@ -40,6 +40,7 @@ class MED:
 class Alignment(MED):
         
     def __init__(self, match: int = 1, mismatch: int = -1, gap: int = -1, gap_filler: str = "-"):
+
         super().__init__()
         self.score_matrix = self.needleman_wunsch(match=match, mismatch=mismatch, gap=gap)
         self.aligned = self.alignment(match=match, mismatch=mismatch, gap=gap, gap_filler=gap_filler)
