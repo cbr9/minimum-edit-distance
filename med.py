@@ -8,6 +8,7 @@ from typing import Tuple
 class MED:
     
     def __init__(self):
+
         self.source = input("Source string: ")
         self.target = input("Target string: ")
         self.source_chars = ["#"] + [char for char in self.source.replace(" ", "_")]
@@ -16,7 +17,6 @@ class MED:
     
     def minimum_edit_distance(self, insert: int = 1, delete: int = 1, substitute: int = 2) -> DataFrame:
         
-      
         med_matrix = np.zeros(shape=(len(self.source) + 1, len(self.target) + 1), dtype=int)
         med_matrix = DataFrame(data=med_matrix, index=self.source_chars, columns=self.target_chars)
         m, n = len(self.source), len(self.target)
@@ -46,6 +46,7 @@ class Alignment(MED):
         self.string_conversion = self.convert_string(gap_filler=gap_filler)
 
     def __str__(self):
+
         return f'Minimum Edit Distance:\n' \
             f'{self.med_matrix}\n\n' \
             f"Minimum Edit Distance from '{self.source}' to '{self.target}' is {self.med_matrix.iloc[-1, -1]} according to Levenshtein's metric.\n" \
@@ -76,7 +77,7 @@ class Alignment(MED):
     def alignment(self, match: int, mismatch: int, gap: int, gap_filler: str) -> Tuple[str, str]:
         
         i, j = len(self.source), len(self.target)
-        
+
         source_aligned = ""
         target_aligned = ""
         
