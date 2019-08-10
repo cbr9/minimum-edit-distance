@@ -7,13 +7,12 @@ from typing import Tuple
 
 class MED:
     
-    def __init__(self, gap_filler: str = "-"):
+    def __init__(self):
         self.source = input("Source string: ")
         self.target = input("Target string: ")
         self.med_matrix = self.minimum_edit_distance()
         self.alignment = self.Alignment(match=1, mismatch=-1, gap=-1, 
-                                        source=self.source, target=self.target,
-                                        gap_filler=gap_filler)
+                                        source=self.source, target=self.target)
     
     def __str__(self):
         return f'Minimum Edit Distance:\n' \
@@ -47,7 +46,7 @@ class MED:
     
     class Alignment:
         
-        def __init__(self, match: int, mismatch: int, gap: int, source: str, target: str, gap_filler: str):
+        def __init__(self, match: int, mismatch: int, gap: int, source: str, target: str, gap_filler: str = "-"):
             self.source = source
             self.target = target
             self.score_matrix = self.needleman_wunsch(match=match, mismatch=mismatch, gap=gap)
@@ -113,7 +112,7 @@ class MED:
             conversion = ""
             conversion += "\nALIGNMENT:\n"
             conversion += f"Origin:   {''.join(source_aligned):10}\n"
-            conversion += f"Target:   {target_aligned:10}\n\n"
+            conversion += f"Target:  {target_aligned:10}\n\n"
             conversion += f"{'Step 0:':<10} {''.join(source_aligned).replace('-', ''):<15}\n"
             
             for i in range(len(source_aligned)):
@@ -121,7 +120,14 @@ class MED:
                 step = f"Step {str(i + 1)}:"
                 origin = source_aligned.copy()
                 origin = "".join(origin).replace(gap_filler, "")
-                op = "" if letter_src == letter_tgt else "(ins)" if letter_src == gap_filler else "(del)" if letter_tgt == gap_filler else "(sub)"
+                if letter_src == letter_tgt:
+                    op = ""
+                elif letter_src == gap_filler:
+                    op = "(ins)"
+                elif letter_tgt == gap_filler:
+                    op = "(del)"
+                else:
+                    op = "(sub)"
                 source_aligned[i] = target_aligned[i]
                 changed = ''.join(source_aligned).replace(gap_filler, "")
                 conversion += f"{step:<10} {origin:<15} >>> {changed:>15} {op:>15}\n"
